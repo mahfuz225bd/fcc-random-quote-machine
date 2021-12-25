@@ -1,0 +1,75 @@
+.wrapper {
+	width: 450px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.quote-container {
+	border: 1px solid none;
+	border-radius: 5px;
+	padding: 27px 7% 20px 7%;
+	background-color: whitesmoke;
+}
+
+.quote-body {
+	font-family: 'Kalam', 'Times New Roman', Times, serif;
+	color: var(--color);
+	overflow: hidden;
+}
+
+.quote-body p {
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.quote-body span.author {
+	float: right;
+	font-size: 1.2rem;
+}
+
+.quote-sign {
+	font-size: x-large;
+	display: block;
+	color: var(--color);
+}
+
+.quote-sign.animated {
+	animation-name: animatedQuoteSign;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes animatedQuoteSign {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.5;
+	}
+}
+
+.quote-footer {
+	width: 100%;
+	padding-top: 15px;
+	display: flex;
+	justify-content: space-between;
+}
+
+footer {
+	color: white;
+	text-align: center;
+	font-size: small;
+	margin-top: 3px;
+}
+
+footer a {
+	color: white;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+footer a:hover {
+	text-decoration: underline;
+}

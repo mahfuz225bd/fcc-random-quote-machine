@@ -1,4 +1,4 @@
-export default const getRandomColor = () => {
+const getRandomColor = () => {
 	const colors = [
 		'#16a085',
 		'#27ae60',
@@ -17,3 +17,5 @@ export default const getRandomColor = () => {
 	const random_index = Math.floor(Math.random() * colors.length);
 	return colors[random_index];
 };
+
+export default getRandomColor;

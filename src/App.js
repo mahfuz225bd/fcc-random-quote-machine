@@ -1,11 +1,127 @@
-import './App.css';
+import React, { Component } from 'react';
+import styles from './App.module.css';
 
-function App() {
-	return (
-		<div>
-			<h2>Random Quote Machine</h2>
-		</div>
-	);
+import getRandomColor from './assets/js/getRandomColor';
+import copyToClipboard from './assets/js/copyToClipboard';
+import textToSpeech from './assets/js/textToSpeech';
+
+import ShareLinks from './components/ShareLinks';
+import ButtonGroup from './components/ButtonGroup';
+
+export default class RandomQuoteMachine extends Component {
+	state = {
+		quotes: [],
+		quote: '',
+		author: '',
+		color: '',
+		disableButtons: false,
+	};
+
+	refQuoteSign = React.createRef();
+	refBtnNewQuote = React.createRef();
+
+	componentDidMount() {
+		fetch(
+			'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json'
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				this.setState({
+					quotes: data.quotes,
+				});
+
+				this.changeRandomQuote();
+			})
+			.catch((err) => console.error(err));
+	}
+
+	componentDidUpdate() {
+		// Changing random color
+		const root = document.querySelector(':root');
+		root.style.setProperty('--color', this.state.color);
+
+		// While loading quote
+		this.refQuoteSign.current.classList.add(styles['animated']);
+	}
+
+	changeRandomQuote = () => {
+		// Disable buttons
+		this.setState({
+			disableButtons: true,
+		});
+
+		// Empty quote and author from state
+		this.setState({
+			quote: '',
+			author: '',
+		});
+
+		// Get random quote form state
+		const getRandomQuote =
+			this.state.quotes[Math.floor(Math.random() * this.state.quotes.length)];
+
+		// Set random quote to state with delaying 1s and make disable=false of #btnNewQuote + remove .animated of #quoteSign
+		setTimeout(() => {
+			this.setState({
+				quote: getRandomQuote.quote,
+				author: getRandomQuote.author,
+				color: getRandomColor(),
+			});
+
+			this.setState({
+				disableButtons: false,
+			});
+
+			this.refQuoteSign.current.classList.remove(styles['animated']);
+		}, 1000);
+	};
+
+	render() {
+		const { quote, author, disableButtons } = this.state;
+		const quoteNarration = `${author} said, "${quote}"`;
+		return (
+			<div className={styles['wrapper']}>
+				<main className={styles['quote-container']}>
+					{/* Quote body */}
+					<section className={styles['quote-body']}>
+						<p>
+							<span className={styles['quote-sign']} ref={this.refQuoteSign}>
+								<i className="fas fa-quote-left" aria-hidden="true"></i>
+							</span>
+							{quote}
+						</p>
+						<span className={styles['author']}>- {author}</span>
+					</section>
+
+					{/* Quote footer */}
+					<section className={styles['quote-footer']}>
+						<ShareLinks
+							shareText={quoteNarration}
+							disableButtons={disableButtons}
+						/>
+						<ButtonGroup
+							btnSpeakAction={() => textToSpeech(quoteNarration)}
+							btnCopyAction={() => {
+								copyToClipboard(quoteNarration);
+								textToSpeech('Copied!');
+							}}
+							btnNewQuoteAction={() => this.changeRandomQuote()}
+							disableButtons={disableButtons}
+						/>
+					</section>
+				</main>
+				<footer>
+					by{' '}
+					<a
+						href="http://codepen.io/mahfuz225bd"
+						target="_blank"
+						rel="noreferrer"
+					>
+						Muhammad Sultan Al Mahfuz
+					</a>
+					.
+				</footer>
+			</div>
+		);
+	}
 }
-
-export default App;
