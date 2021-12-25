@@ -15,10 +15,8 @@ export default class RandomQuoteMachine extends Component {
 		author: '',
 		color: '',
 		disableButtons: false,
+		animatedQuote: false,
 	};
-
-	refQuoteSign = React.createRef();
-	refBtnNewQuote = React.createRef();
 
 	componentDidMount() {
 		fetch(
@@ -39,15 +37,13 @@ export default class RandomQuoteMachine extends Component {
 		// Changing random color
 		const root = document.querySelector(':root');
 		root.style.setProperty('--color', this.state.color);
-
-		// While loading quote
-		this.refQuoteSign.current.classList.add(styles['animated']);
 	}
 
 	changeRandomQuote = () => {
-		// Disable buttons
+		// Disable buttons + enable animateQuote
 		this.setState({
 			disableButtons: true,
+			animatedQuote: true,
 		});
 
 		// Empty quote and author from state
@@ -70,14 +66,13 @@ export default class RandomQuoteMachine extends Component {
 
 			this.setState({
 				disableButtons: false,
+				animatedQuote: false,
 			});
-
-			this.refQuoteSign.current.classList.remove(styles['animated']);
 		}, 1000);
 	};
 
 	render() {
-		const { quote, author, disableButtons } = this.state;
+		const { quote, author, disableButtons, animatedQuote } = this.state;
 		const quoteNarration = `${author} said, "${quote}"`;
 		return (
 			<div className={styles['wrapper']}>
@@ -85,7 +80,13 @@ export default class RandomQuoteMachine extends Component {
 					{/* Quote body */}
 					<section className={styles['quote-body']}>
 						<p>
-							<span className={styles['quote-sign']} ref={this.refQuoteSign}>
+							<span
+								className={
+									animatedQuote
+										? `${styles['quote-sign']} ${styles['animated']}`
+										: styles['quote-sign']
+								}
+							>
 								<i className="fas fa-quote-left" aria-hidden="true"></i>
 							</span>
 							{quote}
@@ -95,10 +96,7 @@ export default class RandomQuoteMachine extends Component {
 
 					{/* Quote footer */}
 					<section className={styles['quote-footer']}>
-						<ShareLinks
-							shareText={quoteNarration}
-							disableButtons={disableButtons}
-						/>
+						<ShareLinks shareText={quoteNarration} hideLinks={disableButtons} />
 						<ButtonGroup
 							btnSpeakAction={() => textToSpeech(quoteNarration)}
 							btnCopyAction={() => {

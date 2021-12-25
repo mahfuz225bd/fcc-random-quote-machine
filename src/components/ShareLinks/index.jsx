@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styles from './ShareLinks.module.css';
 
-export default function ShareLinks({ shareText, disableButtons }) {
+export default function ShareLinks({ shareText, hideLinks }) {
 	return (
 		<div className={styles['share-links']}>
 			<a
@@ -14,7 +14,7 @@ export default function ShareLinks({ shareText, disableButtons }) {
 				title="Share with facebook"
 				target="_blank"
 				rel="noreferrer"
-				hidden={disableButtons}
+				hidden={hideLinks}
 			>
 				<i className="fab fa-facebook-square" aria-hidden="true"></i>
 			</a>
@@ -26,7 +26,7 @@ export default function ShareLinks({ shareText, disableButtons }) {
 				title="Share with twitter"
 				target="_blank"
 				rel="noreferrer"
-				hidden={disableButtons}
+				hidden={hideLinks}
 			>
 				<i className="fab fa-twitter-square" aria-hidden="true"></i>
 			</a>
@@ -36,5 +36,5 @@ export default function ShareLinks({ shareText, disableButtons }) {
 
 ShareLinks.propTypes = {
 	shareText: PropTypes.string.isRequired,
-	disableButtons: PropTypes.bool.isRequired,
+	hideLinks: PropTypes.bool.isRequired,
 };
