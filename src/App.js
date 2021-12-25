@@ -8,7 +8,7 @@ import textToSpeech from './assets/js/textToSpeech';
 import ShareLinks from './components/ShareLinks';
 import ButtonGroup from './components/ButtonGroup';
 
-export default class RandomQuoteMachine extends Component {
+export default class App extends Component {
 	state = {
 		quotes: [],
 		quote: '',
