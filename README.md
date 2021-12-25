@@ -1,6 +1,6 @@
 # Random Quote Machine
 
-Get random popular quotes
+Get random popular quotes.
 
 ## Available Scripts
 

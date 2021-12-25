@@ -16,6 +16,7 @@ export default class App extends Component {
 		color: '',
 		disableButtons: false,
 		animatedQuote: false,
+		speaking: false,
 	};
 
 	componentDidMount() {
@@ -72,7 +73,8 @@ export default class App extends Component {
 	};
 
 	render() {
-		const { quote, author, disableButtons, animatedQuote } = this.state;
+		const { quote, author, disableButtons, animatedQuote, speaking } =
+			this.state;
 		const quoteNarration = `${author} said, "${quote}"`;
 		return (
 			<div className={styles['wrapper']}>
@@ -98,13 +100,25 @@ export default class App extends Component {
 					<section className={styles['quote-footer']}>
 						<ShareLinks shareText={quoteNarration} hideLinks={disableButtons} />
 						<ButtonGroup
-							btnSpeakAction={() => textToSpeech(quoteNarration)}
+							btnSpeakAction={() => {
+								this.setState({
+									speaking: true,
+								});
+
+								const speak = textToSpeech(quoteNarration);
+								speak.onend = () => {
+									this.setState({
+										speaking: false,
+									});
+								};
+							}}
 							btnCopyAction={() => {
 								copyToClipboard(quoteNarration);
 								textToSpeech('Copied!');
 							}}
 							btnNewQuoteAction={() => this.changeRandomQuote()}
 							disableButtons={disableButtons}
+							speaking={speaking}
 						/>
 					</section>
 				</main>
