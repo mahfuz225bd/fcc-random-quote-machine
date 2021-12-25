@@ -1,0 +1,9 @@
+.share-links a {
+	font-size: 2em;
+	margin-right: 2px;
+	color: var(--color);
+}
+
+.share-links a:hover {
+	opacity: 0.9;
+}
