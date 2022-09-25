@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import styles from './App.module.css';
 
 import getRandomColor from './assets/js/getRandomColor';
@@ -9,15 +9,20 @@ import ShareLinks from './components/ShareLinks';
 import ButtonGroup from './components/ButtonGroup';
 
 export default class App extends Component {
-	state = {
-		quotes: [],
-		quote: '',
-		author: '',
-		color: '',
-		disableButtons: false,
-		animatedQuote: false,
-		speaking: false,
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			quotes: [],
+			quote: '',
+			author: '',
+			color: '',
+			disableButtons: false,
+			animatedQuote: false,
+			speaking: false,
+		};
+
+		this.refMsgCopied = createRef();
+	}
 
 	componentDidMount() {
 		fetch(
@@ -78,6 +83,10 @@ export default class App extends Component {
 		const quoteNarration = `${author} said, "${quote}"`;
 		return (
 			<div className={styles['wrapper']}>
+				{/* Alert message, if copied */}
+				<div className={styles['msg-copied']} ref={this.refMsgCopied}>
+					<i className="fas fa-check-circle" aria-hidden="true"></i> Copied!
+				</div>
 				<main className={styles['quote-container']}>
 					{/* Quote body */}
 					<section className={styles['quote-body']}>
@@ -114,7 +123,7 @@ export default class App extends Component {
 							}}
 							btnCopyAction={() => {
 								copyToClipboard(quoteNarration);
-								textToSpeech('Copied!');
+								alert('Copied');
 							}}
 							btnNewQuoteAction={() => this.changeRandomQuote()}
 							disableButtons={disableButtons}
