@@ -140,6 +140,8 @@ export default class App extends Component {
           >
             Muhammad Sultan Al Mahfuz
           </a>
+          .
+          {' '}
           <a
             href="https://github.com/mahfuz225bd/fcc-random-quote-machine"
             target="_blank"
