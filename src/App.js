@@ -138,7 +138,7 @@ export default class App extends Component {
             target="_blank"
             rel="noreferrer"
           >
-            Muhammad Sultan Al Mahfuz
+            App Development Group-C, 7/2/B
           </a>
           .
           {' '}
