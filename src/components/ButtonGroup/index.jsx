@@ -10,7 +10,7 @@ export default function ButtonGroup({
 }) {
 	return (
 		<div className={styles['button-group']}>
-			<button
+	{/* <button
 				id="btnSpeak"
 				title="Speak quote"
 				onClick={btnSpeakAction}
@@ -24,7 +24,7 @@ export default function ButtonGroup({
 				disabled={disableButtons}
 			>
 				<i className="fas fa-copy" aria-hidden="true"></i> Copy
-			</button>
+			</button> */}
 			<button
 				title="Get new quote"
 				onClick={btnNewQuoteAction}
