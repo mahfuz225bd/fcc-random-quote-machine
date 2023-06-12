@@ -107,7 +107,7 @@ export default class App extends Component {
 
           {/* Quote footer */}
           <section className={styles['quote-footer']}>
-            <ShareLinks shareText={quoteNarration} hideLinks={disableButtons} />
+            {/* <ShareLinks shareText={quoteNarration} hideLinks={disableButtons} /> */}
             <ButtonGroup
               btnSpeakAction={() => {
                 this.setState({
